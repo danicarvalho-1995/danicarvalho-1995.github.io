@@ -1,6 +1,6 @@
 # Portfólio de Análise de Dados — Daniel de Carvalho Nunes
 
-Site de portfólio pessoal, com **Nara Hotéis | Diagnóstico** como projeto principal.
+Site de portfólio pessoal, com **Nara Hotéis | Diagnóstico** como projeto de conclusão de curso no Senac RJ.
 
 ## Site
 
