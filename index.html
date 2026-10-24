@@ -33,6 +33,27 @@
 <script>
 const capacity=[{name:"Centro",pct:31.67,excess:"+19",peak:"79 / 60"},{name:"Nova Iguaçu Centro",pct:28,excess:"+14",peak:"64 / 50"},{name:"Copacabana Premium",pct:12.5,excess:"+5",peak:"45 / 40"}];
 function drawCapacity(){document.getElementById("capacityChart").innerHTML=capacity.map(x=>'<div><div class="region-row"><span>'+x.name+'</span><div class="track"><div class="fill" style="width:'+x.pct/31.67*100+'%"></div></div><strong>'+x.pct.toLocaleString("pt-BR",{maximumFractionDigits:2})+'%</strong></div><div style="font-size:.72rem;color:#66766f;margin:4px 0 0 120px">Pico/capacidade: '+x.peak+' · excesso '+x.excess+'</div></div>').join("")}
-document.getElementById("viewFilter").addEventListener("change",e=>{const v=e.target.value;document.querySelectorAll(".kpi").forEach((el,i)=>{el.style.display=v==="capacidade"&&i===1?"none":""});document.querySelector(".case-grid").style.display=v==="capacidade"?"grid":"";document.querySelector(".chartgrid").style.display=v==="copacabana"?"none":"grid";document.querySelector(".case-grid").scrollIntoView({behavior:"smooth",block:"nearest"})});
-document.getElementById("year").textContent=new Date().getFullYear();drawCapacity();
+const filter=document.getElementById("viewFilter");
+const kpis=[...document.querySelectorAll(".kpi")];
+const capacityChart=document.getElementById("capacityChart").closest(".chart");
+const copacabanaChart=document.querySelector(".chartgrid .chart:nth-child(2)");
+const caseCards=[...document.querySelectorAll(".case-grid .case-card")];
+const notice=document.querySelector(".notice");
+function applyView(view){
+  const general=view==="geral", capacityView=view==="capacidade", copaView=view==="copacabana";
+  kpis.forEach((el,i)=>{el.style.display=general||(capacityView&&i>=2)||(copaView&&i===0)?"":"none"});
+  capacityChart.style.display=general||capacityView?"":"none";
+  copacabanaChart.style.display=general||copaView?"":"none";
+  document.querySelector(".chartgrid").style.gridTemplateColumns=general?"1fr 1fr":"1fr";
+  caseCards[0].style.display=general||capacityView?"":"none";
+  caseCards[1].style.display=general||copaView?"":"none";
+  document.querySelector(".case-grid").style.gridTemplateColumns=general?"1.05fr .95fr":"1fr";
+  notice.textContent=capacityView
+    ?"Recorte: capacidade operacional. Os percentuais representam os excessos sobre a capacidade cadastrada reportados na apresentação."
+    :copaView
+      ?"Recorte: Copacabana Premium. A receita acumulada é analisada em conjunto com capacidade e tempo de operação."
+      :"Os indicadores reproduzem números explicitamente informados na apresentação. Não foram criadas séries mensais ou regionais sem valores numéricos documentados.";
+}
+filter.addEventListener("change",e=>applyView(e.target.value));
+document.getElementById("year").textContent=new Date().getFullYear();drawCapacity();applyView(filter.value);
 </script></body></html>
