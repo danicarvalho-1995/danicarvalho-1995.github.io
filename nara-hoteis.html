@@ -146,7 +146,7 @@ function aggregateUnits(rows){
 function updateUnitOptions(){
  const old=unitFilter.value,rg=regionFilter.value;
  const units=DATA.units.filter(u=>rg==="Todas"||canonicalRegion(u.region)===rg);
- unitFilter.innerHTML='<option value="Todas">Todas as unidades</option>'+units.map(u=>'<option value="'+esc(u.id)+'">'+esc(u.name.replace(/^NaraHoteis\\s*/,""))+'</option>').join("");
+ unitFilter.innerHTML='<option value="Todas">Todas as unidades</option>'+units.map(u=>'<option value="'+esc(u.id)+'">'+esc(u.name.replace(/^NaraHoteis\s*/,""))+'</option>').join("");
  if(units.some(u=>u.id===old))unitFilter.value=old;else unitFilter.value="Todas";
 }
 function renderKPIs(rows){
@@ -160,6 +160,7 @@ function renderKPIs(rows){
  const un=unitFilter.value==="Todas"?"todas as unidades":(DATA.units.find(u=>u.id===unitFilter.value)||{}).name||"unidade";
  document.getElementById("selectionSummary").textContent=rg+" · "+yr+" · "+un;
 }
+function shortUnit(name){const raw=name.replace(/^NaraHoteis\s*/,"");const map={"Barra da Tijuca":"Barra","Nova Iguaçu Centro":"N. Iguaçu C.","Nova Iguaçu Park":"N. Iguaçu P.","Copacabana Premium":"Copacabana","Angra dos Reis":"Angra","Santa Teresa":"S. Teresa"};return map[raw]||raw;}
 function renderUnitChart(rows){
  const items=aggregateUnits(rows);
  if(!items.length){document.getElementById("unitChart").innerHTML="<p>Sem registros para os filtros selecionados.</p>";return;}
@@ -177,7 +178,7 @@ function renderUnitChart(rows){
  items.forEach((x,i)=>{
   const cx=L+slot*(i+.5),bh=x.guests/maxG*PH,by=B-bh,avgY=B-(x.avg/maxA)*PH;
   s+='<g class="selectable" data-unit="'+esc(x.id)+'"><rect class="bar-shape" x="'+(cx-barW/2)+'" y="'+by+'" width="'+barW+'" height="'+bh+'" rx="4"><title>'+esc(x.name)+': '+fmtInt.format(x.guests)+' hóspedes em '+fmtInt.format(x.reservations)+' reservas</title></rect>';
-  s+='<text class="axis-text" x="'+cx+'" y="'+(B+19)+'" text-anchor="middle">'+esc(x.name.replace(/^NaraHoteis\\s*/,"").replace("Nova Iguaçu ","N. Iguaçu "))+'</text></g>';
+  s+='<text class="axis-text" x="'+cx+'" y="'+(B+19)+'" text-anchor="middle">'+esc(shortUnit(x.name))+'</text></g>';
   points.push({x:cx,y:avgY,unit:x});
  });
  s+='<path class="trend-line" d="'+points.map((p,i)=>(i?"L":"M")+p.x+" "+p.y).join(" ")+'"/>';
