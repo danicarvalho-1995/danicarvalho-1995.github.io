@@ -1,30 +1,50 @@
 # Portfólio de Análise de Dados — Daniel de Carvalho Nunes
 
-Site de portfólio pessoal, com **Nara Hotéis | Diagnóstico** como projeto de conclusão de curso no Senac RJ.
+Site pessoal publicado com GitHub Pages.
 
-## Site
+- **Página inicial:** https://danicarvalho-1995.github.io/
+- **Projeto Nara Hotéis:** https://danicarvalho-1995.github.io/nara-hoteis.html
+- **Repositório do portfólio:** https://github.com/danicarvalho-1995/danicarvalho-1995.github.io
+- **Projeto-fonte:** https://github.com/danicarvalho-1995/Nara-Hoteis
 
-- URL esperada: https://danicarvalho-1995.github.io/
-- Repositório: https://github.com/danicarvalho-1995/danicarvalho-1995.github.io
+## Estrutura do site
 
-## Projeto em destaque
+- `index.html`: apresentação profissional, competências e acesso ao projeto em destaque.
+- `nara-hoteis.html`: dashboard web interativo do projeto Nara Hotéis, com filtros por região, ano e unidade; indicadores, gráficos e explicações metodológicas.
+- `nara-data.js`: agregações mensais derivadas das bases limpas do projeto. Contém somente contagens de reservas e hóspedes por mês, região e unidade; não contém nomes, identificadores de clientes ou registros individuais.
+- `.github/workflows/pages.yml`: publicação automática no GitHub Pages após alterações na branch `main`.
 
-O dashboard apresenta indicadores documentados no material “Nara Hotéis — Consultoria de Dados: Diagnóstico e Painel Gerencial”, cuja atualização indicada é 22/09/2026. O projeto foi desenvolvido por Daniel de Carvalho Nunes e Karoline Duffrayer.
+## Dashboard Nara Hotéis
 
-O conteúdo destaca:
-- 13 unidades, 4 regiões e 6 bases de dados;
-- 321 clientes cadastrados;
-- três unidades com registros de reservas simultâneas acima da capacidade cadastrada;
-- estudo de caso Copacabana Premium, com receita estimada, receita por quarto, RevPAR corrigido e diária média.
+A página web foi recriada a partir da estrutura visual e dos campos identificados no arquivo `Nara Hoteis.pbix`. A reprodução contempla:
 
-## Integridade dos dados
+1. Filtro regional.
+2. Gráfico combinado de total de hóspedes e média de hóspedes por reserva por unidade.
+3. Série temporal de reservas por mês e região.
+4. Tabela comparativa com reservas do mês, mês anterior, variação mensal e mesmo mês do ano anterior.
+5. Explicações de cada visual, medidas e cuidados de interpretação.
 
-Os números exibidos foram transcritos da apresentação do projeto. O material informa que os dados estão sujeitos a revisão. Não foram inventadas séries mensais de faturamento nem outros valores não apresentados numericamente. Os gráficos são limitados aos valores documentados.
+Os filtros por ano e unidade foram acrescentados para facilitar a exploração na página web. Eles atualizam os indicadores, os gráficos e a tabela em conjunto.
 
-## Publicação via GitHub Pages
+## Dados e metodologia
 
-O repositório tem o nome de usuário exigido para um site pessoal. Para disponibilizar o site, confirme em **Settings → Pages** que a fonte de publicação está configurada como **GitHub Actions**. O workflow em `.github/workflows/pages.yml` publica os arquivos estáticos após um push para a branch `main`.
+As agregações web são derivadas de:
 
-## Repositório do projeto Nara Hotéis
+- `reservaslimpo.csv`
+- `unidadeslimpo.csv`
 
-https://github.com/danicarvalho-1995/Nara-Hoteis
+Na versão consultada, a base contém 4.649 registros de reservas, 13 unidades e check-ins entre janeiro de 2023 e agosto de 2026.
+
+O arquivo `nara-data.js` reúne 547 agregações no grão mês de check-in × região × unidade. Ele é gerado sem dados pessoais de clientes. A soma de hóspedes representa o total informado nos registros de reservas, não pessoas únicas. A contagem de reservas considera todos os status, pois o painel do PBIX não apresenta filtro de status nesta página.
+
+Há duas variações de capitalização no campo de região para “Baixada Fluminense”. Na experiência web, esses valores foram agrupados sob o mesmo rótulo para evitar duplicidade visual. Os demais rótulos foram preservados.
+
+**Importante:** a página web é uma reprodução interativa independente, em HTML, CSS e JavaScript. Ela não executa o arquivo PBIX nem incorpora o motor do Power BI. Os gráficos são recalculados a partir das agregações disponibilizadas no próprio site.
+
+## Publicação
+
+O workflow em `.github/workflows/pages.yml` publica os arquivos estáticos após um push para a branch `main`. A configuração do Pages deve usar **GitHub Actions** como fonte de publicação.
+
+## Autoria
+
+Portfólio de Daniel de Carvalho Nunes. O projeto Nara Hotéis foi desenvolvido por Daniel de Carvalho Nunes e Karoline Duffrayer.
