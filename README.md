@@ -48,3 +48,9 @@ O workflow em `.github/workflows/pages.yml` publica os arquivos estáticos após
 ## Autoria
 
 Portfólio de Daniel de Carvalho Nunes. O projeto Nara Hotéis foi desenvolvido por Daniel de Carvalho Nunes e Karoline Duffrayer.
+
+## Contexto externo do mercado hoteleiro
+
+A página `nara-hoteis.html` contém uma seção com seis reportagens autorizadas para contextualizar as análises do projeto: O Globo (Rock in Rio), Folha de S.Paulo (Lady Gaga em Copacabana e cenário do turismo doméstico), UOL (Réveillon no Rio e NFL no Rio) e Metrópoles (hotelaria de luxo).
+
+Essas matérias são referências externas do mercado real. Seus indicadores não são misturados aos dados da rede fictícia Nara Hotéis nem incorporados aos cálculos e gráficos do dashboard. As prévias de ocupação, resultados de eventos, médias nacionais e dados de hotelaria de luxo possuem escopos distintos e devem ser comparados com cautela.
