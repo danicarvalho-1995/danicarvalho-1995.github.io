@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Dashboard interativo do projeto Nara Hotéis, recriado a partir do PBIX e das bases públicas do projeto.">
+<title>Nara Hotéis | Dashboard de desempenho — Daniel Carvalho</title>
+<style>
+:root{--bg:#f4f5ef;--paper:#fff;--ink:#183328;--muted:#69786f;--green:#174d35;--green2:#28724d;--mint:#dcebe0;--gold:#b78635;--line:#dfe6de;--soft:#f7f8f4;--red:#b84a43;--shadow:0 16px 40px #163c2910}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}.wrap{width:min(1240px,calc(100% - 42px));margin:auto}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}.brand{text-decoration:none;font-weight:850;letter-spacing:-.05em}.brand span{color:var(--gold)}.navlinks{display:flex;gap:19px;align-items:center}.navlinks a{text-decoration:none;color:var(--muted);font-size:.87rem}.navlinks a:hover{color:var(--green)}
+.back{color:var(--green)!important;font-weight:750}.hero{padding:34px 0 27px;display:grid;grid-template-columns:1.3fr .7fr;gap:28px;align-items:end}.eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--green2)}h1{font-size:clamp(2.1rem,4.5vw,4rem);line-height:1.02;letter-spacing:-.07em;margin:12px 0 14px}.hero p{max-width:760px;color:var(--muted);margin:0}.hero-side{background:var(--green);color:#fff;border-radius:18px;padding:22px 24px}.hero-side small{color:#d6e6da;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem}.hero-side strong{display:block;font-size:1.4rem;line-height:1.1;margin:8px 0}.hero-side span{font-size:.8rem;color:#d6e6da}
+.filter-panel{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:18px;padding:18px 20px;margin:20px 0 16px}.filter-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:12px}.filter-heading strong{font-size:.94rem}.filter-heading small{color:var(--muted)}.filters{display:grid;grid-template-columns:1fr 1fr 1.4fr auto;gap:10px;align-items:end}.field label{display:block;font-size:.73rem;color:var(--muted);font-weight:750;margin:0 0 5px}.field select{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;color:var(--ink);font:inherit;font-size:.84rem}.reset{border:1px solid var(--green);background:var(--green);color:white;border-radius:999px;padding:10px 16px;font:inherit;font-size:.82rem;font-weight:750;cursor:pointer}.reset:hover{background:#0f3c27}.filter-note{margin:11px 0 0;color:var(--muted);font-size:.75rem}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 18px}.kpi{background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:17px 19px;box-shadow:var(--shadow)}.kpi small{display:block;color:var(--muted);font-size:.75rem}.kpi strong{display:block;font-size:clamp(1.45rem,2.6vw,2.2rem);letter-spacing:-.06em;line-height:1.15;margin:6px 0 4px}.kpi .hint{font-size:.72rem;color:var(--green2)}
+.section-title{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:40px 0 15px}.section-title h2{font-size:clamp(1.45rem,2.8vw,2.2rem);letter-spacing:-.06em;line-height:1.05;margin:6px 0 0}.section-title p{max-width:540px;color:var(--muted);font-size:.86rem;margin:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px 21px;box-shadow:var(--shadow);min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:5px}.panel h3{font-size:1.02rem;margin:0;letter-spacing:-.02em}.panel .subtitle{color:var(--muted);font-size:.76rem;margin:2px 0 13px}.panel-tag{font-size:.67rem;font-weight:750;color:var(--green2);background:var(--mint);padding:5px 8px;border-radius:999px;white-space:nowrap}
+.chart-scroll{overflow-x:auto;overflow-y:hidden;width:100%;padding-bottom:3px}.chart-scroll svg{display:block;width:100%;min-width:720px;height:auto;overflow:visible}.chart-scroll.monthly svg{min-width:720px}.axis-text{font-size:10px;fill:#69786f}.axis-title{font-size:10px;fill:#69786f}.gridline{stroke:#e8ede7;stroke-width:1}.bar-shape{fill:#28724d;opacity:.9}.bar-shape:hover{opacity:1}.trend-line{fill:none;stroke:#b78635;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.trend-dot{fill:#b78635;stroke:#fff;stroke-width:1.5}.selectable{cursor:pointer}.selectable:hover .bar-shape{fill:#b78635}.legend{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 0;font-size:.72rem;color:var(--muted)}.legend-item{display:flex;align-items:center;gap:6px}.legend-swatch{width:10px;height:10px;border-radius:3px;display:inline-block}.legend-line{height:3px;width:16px;border-radius:2px;display:inline-block}
+.explain{margin-top:13px;background:var(--soft);border-left:3px solid var(--gold);border-radius:0 11px 11px 0;padding:12px 14px}.explain strong{font-size:.78rem}.explain p{font-size:.78rem;color:var(--muted);margin:4px 0 0}
+.table-scroll{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:12px;margin-top:10px}table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}th{position:sticky;top:0;background:#f1f5ef;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;z-index:1}td:first-child,th:first-child{text-align:left}tbody tr:hover{background:#f8faf7}td.positive{color:var(--green2);font-weight:750}td.negative{color:var(--red);font-weight:750}.table-note{color:var(--muted);font-size:.74rem;margin:10px 0 0}
+.explain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}.explain-card{background:#eaf1e9;border:1px solid #dce8db;border-radius:14px;padding:17px}.explain-card b{display:block;font-size:.82rem;margin-bottom:5px}.explain-card p{color:#586b5f;font-size:.77rem;margin:0}
+.method{background:var(--green);color:#fff;border-radius:18px;padding:23px 25px;margin:32px 0 48px;display:grid;grid-template-columns:1.1fr .9fr;gap:28px}.method h2{font-size:1.42rem;letter-spacing:-.04em;margin:0 0 8px}.method p,.method li{color:#d8e6dc;font-size:.8rem}.method ul{padding-left:18px;margin:8px 0}.method .method-box{border-left:1px solid #ffffff44;padding-left:24px}.method strong{color:#fff}.repo-link{display:inline-block;color:#fff;font-size:.82rem;font-weight:750;margin-top:8px;text-decoration:none;border-bottom:1px solid #c7d8cb;padding-bottom:3px}
+.footer{border-top:1px solid var(--line);padding:21px 0 28px;display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.76rem}
+@media(max-width:880px){.hero{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:repeat(2,1fr)}.method{grid-template-columns:1fr}.method .method-box{border-left:0;border-top:1px solid #ffffff44;padding:18px 0 0}}
+@media(max-width:560px){.wrap{width:calc(100% - 26px)}.nav{align-items:flex-start;gap:12px}.navlinks{gap:9px;flex-wrap:wrap;justify-content:end}.navlinks a{font-size:.76rem}.filters{grid-template-columns:1fr}.kpis{gap:8px}.kpi{padding:13px}.panel{padding:16px}.section-title{display:block}.section-title p{margin-top:8px}.explain-grid{grid-template-columns:1fr}.hero{padding-top:20px}.filter-panel{padding:15px}.footer{display:block}.footer span{display:block;margin:4px 0}}
+</style>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="index.html">DC<span>.</span> / PORTFÓLIO</a>
+  <nav class="navlinks"><a class="back" href="index.html">← Página inicial</a><a href="https://github.com/danicarvalho-1995/Nara-Hoteis" target="_blank" rel="noreferrer">Repositório ↗</a></nav>
+</header>
+<main class="wrap">
+<section class="hero">
+  <div>
+    <div class="eyebrow">Projeto de análise de dados · Power BI</div>
+    <h1>Nara Hotéis | Painel de desempenho</h1>
+    <p>Versão web interativa construída a partir da estrutura do arquivo PBIX e das bases limpas do projeto. Os filtros atualizam os indicadores, os gráficos e a comparação temporal em conjunto.</p>
+  </div>
+  <aside class="hero-side"><small>Escopo dos dados</small><strong>Rede hoteleira do Estado do Rio de Janeiro</strong><span id="coverage">13 unidades · 4 regiões · período observado</span></aside>
+</section>
+
+<section class="filter-panel" aria-label="Filtros do painel">
+  <div class="filter-heading"><strong>Filtros de análise</strong><small id="selectionSummary">Todos os registros</small></div>
+  <div class="filters">
+    <div class="field"><label for="regionFilter">Região</label><select id="regionFilter"><option value="Todas">Todas as regiões</option></select></div>
+    <div class="field"><label for="yearFilter">Ano do check-in</label><select id="yearFilter"><option value="Todos">Todo o período</option></select></div>
+    <div class="field"><label for="unitFilter">Unidade hoteleira</label><select id="unitFilter"><option value="Todas">Todas as unidades</option></select></div>
+    <button class="reset" id="resetFilters" type="button">Limpar filtros</button>
+  </div>
+  <p class="filter-note">O filtro regional segue o campo <strong>regiao</strong> do modelo do Power BI. As variações de capitalização de “Baixada Fluminense” foram agrupadas como uma única região na experiência web.</p>
+</section>
+
+<section class="kpis" aria-label="Indicadores principais">
+  <article class="kpi"><small>Total de reservas</small><strong id="kpiReservations">—</strong><span class="hint">Registros no recorte selecionado</span></article>
+  <article class="kpi"><small>Total de hóspedes</small><strong id="kpiGuests">—</strong><span class="hint">Soma de hóspedes informados</span></article>
+  <article class="kpi"><small>Média de hóspedes por reserva</small><strong id="kpiAverage">—</strong><span class="hint">Hóspedes ÷ reservas</span></article>
+  <article class="kpi"><small>Unidades no recorte</small><strong id="kpiUnits">—</strong><span class="hint">Unidades com registros no período</span></article>
+</section>
+
+<section>
+  <div class="section-title"><div><div class="eyebrow">01 / Distribuição por unidade</div><h2>Hóspedes por unidade hoteleira</h2></div><p>Compara o volume total de hóspedes e a média de hóspedes por reserva em cada unidade. Clique em uma coluna para filtrar o painel por aquela unidade.</p></div>
+  <article class="panel">
+    <div class="panel-head"><h3>Total de hóspedes e média por reserva</h3><span class="panel-tag">Gráfico combinado</span></div>
+    <p class="subtitle">Colunas: total de hóspedes · Linha: média de hóspedes por reserva</p>
+    <div class="chart-scroll" id="unitChart" role="img" aria-label="Gráfico de hóspedes por unidade"></div>
+    <div class="legend"><span class="legend-item"><i class="legend-swatch" style="background:#28724d"></i>Total de hóspedes</span><span class="legend-item"><i class="legend-line" style="background:#b78635"></i>Média de hóspedes por reserva</span></div>
+    <div class="explain"><strong>Como interpretar</strong><p>As colunas evidenciam quais unidades concentram mais hóspedes no período selecionado. A linha usa uma escala secundária e mostra o tamanho médio dos grupos por reserva. A comparação ajuda a diferenciar volume de operação de perfil médio das reservas; hotéis maiores podem acumular mais hóspedes sem necessariamente ter grupos maiores.</p></div>
+  </article>
+</section>
+
+<section>
+  <div class="section-title"><div><div class="eyebrow">02 / Evolução temporal</div><h2>Reservas ao longo dos meses, por região</h2></div><p>Mostra como o número de reservas se distribui no tempo e compara as regiões no mesmo eixo mensal.</p></div>
+  <article class="panel">
+    <div class="panel-head"><h3>Evolução mensal de reservas</h3><span class="panel-tag">Série temporal</span></div>
+    <p class="subtitle">Contagem de reservas por mês de check-in, segmentada pela região da unidade</p>
+    <div class="chart-scroll monthly" id="monthlyChart" role="img" aria-label="Série mensal de reservas por região"></div>
+    <div class="legend" id="regionLegend"></div>
+    <div class="explain"><strong>Como interpretar</strong><p>Cada linha representa uma região. Picos e quedas indicam mudanças no número de reservas registradas, não necessariamente mudanças de receita ou ocupação. Para uma comparação adequada, observe o mesmo período e considere que 2026 termina em agosto na base disponível.</p></div>
+  </article>
+</section>
+
+<section>
+  <div class="section-title"><div><div class="eyebrow">03 / Comparação de períodos</div><h2>Reservas e variação mensal</h2></div><p>Organiza a comparação entre o mês selecionado, o mês imediatamente anterior e o mesmo mês do ano anterior.</p></div>
+  <article class="panel">
+    <div class="panel-head"><h3>Comparativo mensal de reservas</h3><span class="panel-tag">Tabela de apoio</span></div>
+    <p class="subtitle" id="tableSubtitle">Comparação mensal calculada conforme os filtros selecionados</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Mês</th><th>Reservas no mês</th><th>Mês anterior</th><th>Variação mensal</th><th>Mesmo mês ano anterior</th></tr></thead>
+        <tbody id="comparisonBody"></tbody>
+      </table>
+    </div>
+    <p class="table-note">Variação mensal = (reservas do mês − reservas do mês anterior) ÷ reservas do mês anterior. “—” indica ausência de período comparável na janela de dados ou denominador igual a zero.</p>
+    <div class="explain"><strong>Como interpretar</strong><p>A tabela complementa a série temporal com valores exatos e comparações. O campo “mesmo mês ano anterior” permite uma leitura sazonal; a variação mensal mede a mudança em relação ao mês imediatamente anterior. Crescimento percentual não deve ser interpretado isoladamente quando o volume de reservas é pequeno.</p></div>
+  </article>
+</section>
+
+<section>
+  <div class="section-title"><div><div class="eyebrow">04 / Como usar o painel</div><h2>Leitura guiada dos indicadores</h2></div></div>
+  <div class="explain-grid">
+    <article class="explain-card"><b>Total de reservas</b><p>Conta os registros da base de reservas incluídos no recorte. Não representa apenas reservas concluídas: o PBIX não apresenta um filtro de status nesta página.</p></article>
+    <article class="explain-card"><b>Total de hóspedes</b><p>Soma a quantidade de hóspedes informada em cada reserva. É uma medida de volume; não equivale ao número de clientes únicos.</p></article>
+    <article class="explain-card"><b>Média de hóspedes por reserva</b><p>Divide o total de hóspedes pelo total de reservas. A média é recalculada depois da aplicação dos filtros, sem somar médias parciais.</p></article>
+  </div>
+</section>
+
+<section class="method">
+  <div><div class="eyebrow" style="color:#c8e2ce">05 / Fonte e metodologia</div><h2>Do modelo do Power BI para a experiência web</h2><p>O PBIX orientou a seleção dos elementos: filtro por região, gráfico combinado de hóspedes por unidade, série temporal de reservas por região e tabela de comparação com períodos anteriores. A página web foi implementada em HTML, CSS e JavaScript para permitir navegação pública no GitHub Pages.</p><p>As agregações foram produzidas a partir de <strong>reservaslimpo.csv</strong> e <strong>unidadeslimpo.csv</strong>, disponíveis no repositório do projeto. O arquivo publicado contém somente dados agregados por mês, região e unidade; não inclui nomes, IDs de clientes ou linhas individuais de reservas.</p><a class="repo-link" href="https://github.com/danicarvalho-1995/Nara-Hoteis" target="_blank" rel="noreferrer">Consultar bases, notebooks e documentação do projeto ↗</a></div>
+  <div class="method-box"><strong>Cuidados de interpretação</strong><ul><li>O período disponível vai de janeiro de 2023 a agosto de 2026.</li><li>A contagem considera os registros existentes na base, independentemente do status da reserva.</li><li>Os totais de hóspedes representam soma de hóspedes registrados, não pessoas distintas.</li><li>A variação mensal e a comparação anual são recalculadas com os mesmos filtros de região e unidade.</li><li>Os rótulos das regiões foram normalizados apenas quanto à capitalização de “Baixada Fluminense”.</li></ul></div>
+</section>
+</main>
+<footer class="wrap footer"><span>© <span id="year"></span> Daniel de Carvalho Nunes</span><span>Nara Hotéis · Dashboard web interativo · GitHub Pages</span></footer>
+
+<script src="nara-data.js"></script>
+<script>
+(function(){
+"use strict";
+const DATA=window.NARA_DATA;
+if(!DATA){document.getElementById("unitChart").textContent="Não foi possível carregar os dados.";return;}
+const regionFilter=document.getElementById("regionFilter");
+const yearFilter=document.getElementById("yearFilter");
+const unitFilter=document.getElementById("unitFilter");
+const regionColors={"Capital":"#28724d","Baixada Fluminense":"#b78635","Costa Verde":"#497da8","Serra":"#8a6aad"};
+const fmtInt=new Intl.NumberFormat("pt-BR");
+const fmtDec=new Intl.NumberFormat("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtMonth=new Intl.DateTimeFormat("pt-BR",{month:"short",year:"numeric"});
+function canonicalRegion(v){
+ const s=String(v||"").trim().toLocaleLowerCase("pt-BR");
+ if(s==="baixada fluminense")return "Baixada Fluminense";
+ if(s==="capital")return "Capital";
+ if(s==="costa verde")return "Costa Verde";
+ if(s==="serra")return "Serra";
+ return v||"Não informado";
+}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function monthLabel(key){const p=key.split("-");return fmtMonth.format(new Date(Number(p[0]),Number(p[1])-1,1));}
+function prevMonth(key){const p=key.split("-");const d=new Date(Number(p[0]),Number(p[1])-2,1);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");}
+function rowsWithoutYear(){const rg=regionFilter.value,un=unitFilter.value;return DATA.data.filter(r=>(rg==="Todas"||canonicalRegion(r[1])===rg)&&(un==="Todas"||r[2]===un));}
+function filteredRows(){const y=yearFilter.value;return rowsWithoutYear().filter(r=>y==="Todos"||r[0].slice(0,4)===y);}
+function aggregateUnits(rows){
+ const map={};
+ rows.forEach(r=>{const id=r[2];if(!map[id])map[id]={id:id,reservations:0,guests:0};map[id].reservations+=r[3];map[id].guests+=r[4];});
+ return Object.keys(map).map(id=>{const x=map[id],u=DATA.units.find(y=>y.id===id);return {id:id,name:u?u.name:"Unidade",reservations:x.reservations,guests:x.guests,avg:x.reservations?x.guests/x.reservations:0};}).sort((a,b)=>b.guests-a.guests);
+}
+function updateUnitOptions(){
+ const old=unitFilter.value,rg=regionFilter.value;
+ const units=DATA.units.filter(u=>rg==="Todas"||canonicalRegion(u.region)===rg);
+ unitFilter.innerHTML='<option value="Todas">Todas as unidades</option>'+units.map(u=>'<option value="'+esc(u.id)+'">'+esc(u.name.replace(/^NaraHoteis\\s*/,""))+'</option>').join("");
+ if(units.some(u=>u.id===old))unitFilter.value=old;else unitFilter.value="Todas";
+}
+function renderKPIs(rows){
+ let n=0,g=0,ids={};rows.forEach(r=>{n+=r[3];g+=r[4];ids[r[2]]=1;});
+ document.getElementById("kpiReservations").textContent=fmtInt.format(n);
+ document.getElementById("kpiGuests").textContent=fmtInt.format(g);
+ document.getElementById("kpiAverage").textContent=n?fmtDec.format(g/n):"—";
+ document.getElementById("kpiUnits").textContent=fmtInt.format(Object.keys(ids).length);
+ const rg=regionFilter.value==="Todas"?"todas as regiões":regionFilter.value;
+ const yr=yearFilter.value==="Todos"?"todo o período":yearFilter.value;
+ const un=unitFilter.value==="Todas"?"todas as unidades":(DATA.units.find(u=>u.id===unitFilter.value)||{}).name||"unidade";
+ document.getElementById("selectionSummary").textContent=rg+" · "+yr+" · "+un;
+}
+function renderUnitChart(rows){
+ const items=aggregateUnits(rows);
+ if(!items.length){document.getElementById("unitChart").innerHTML="<p>Sem registros para os filtros selecionados.</p>";return;}
+ const W=Math.max(850,items.length*63+120),H=300,L=60,R=W-62,T=22,B=234,PH=B-T,PW=R-L;
+ const maxG=Math.max(10,Math.ceil(Math.max.apply(null,items.map(x=>x.guests))*1.15/50)*50);
+ const maxA=Math.max(1,Math.ceil(Math.max.apply(null,items.map(x=>x.avg))*2)/2);
+ let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Total de hóspedes em colunas e média de hóspedes por reserva em linha">';
+ for(let i=0;i<=4;i++){
+  const val=maxG*i/4,y=B-PH*i/4;
+  s+='<line class="gridline" x1="'+L+'" y1="'+y+'" x2="'+R+'" y2="'+y+'"/><text class="axis-text" x="'+(L-9)+'" y="'+(y+4)+'" text-anchor="end">'+fmtInt.format(Math.round(val))+'</text>';
+  s+='<text class="axis-text" x="'+(R+10)+'" y="'+(y+4)+'">'+fmtDec.format(maxA*i/4)+'</text>';
+ }
+ s+='<text class="axis-title" x="'+L+'" y="12">Hóspedes</text><text class="axis-title" x="'+R+'" y="12" text-anchor="end">Média por reserva</text>';
+ const slot=PW/items.length,barW=Math.min(34,slot*.48);let points=[];
+ items.forEach((x,i)=>{
+  const cx=L+slot*(i+.5),bh=x.guests/maxG*PH,by=B-bh,avgY=B-(x.avg/maxA)*PH;
+  s+='<g class="selectable" data-unit="'+esc(x.id)+'"><rect class="bar-shape" x="'+(cx-barW/2)+'" y="'+by+'" width="'+barW+'" height="'+bh+'" rx="4"><title>'+esc(x.name)+': '+fmtInt.format(x.guests)+' hóspedes em '+fmtInt.format(x.reservations)+' reservas</title></rect>';
+  s+='<text class="axis-text" x="'+cx+'" y="'+(B+19)+'" text-anchor="middle">'+esc(x.name.replace(/^NaraHoteis\\s*/,"").replace("Nova Iguaçu ","N. Iguaçu "))+'</text></g>';
+  points.push({x:cx,y:avgY,unit:x});
+ });
+ s+='<path class="trend-line" d="'+points.map((p,i)=>(i?"L":"M")+p.x+" "+p.y).join(" ")+'"/>';
+ points.forEach(p=>{s+='<circle class="trend-dot" cx="'+p.x+'" cy="'+p.y+'" r="5"><title>'+esc(p.unit.name)+': '+fmtDec.format(p.unit.avg)+' hóspedes por reserva</title></circle>';});
+ s+='</svg>';document.getElementById("unitChart").innerHTML=s;
+ document.querySelectorAll("#unitChart [data-unit]").forEach(el=>el.addEventListener("click",function(){unitFilter.value=this.getAttribute("data-unit");updateDashboard();}));
+}
+function renderMonthlyChart(rows){
+ const map={},months=new Set(),regions=new Set();
+ rows.forEach(r=>{const region=canonicalRegion(r[1]);const key=r[0]+"|"+region;map[key]=(map[key]||0)+r[3];months.add(r[0]);regions.add(region);});
+ const ms=[...months].sort(),rs=[...regions].sort();
+ if(!ms.length){document.getElementById("monthlyChart").innerHTML="<p>Sem registros para os filtros selecionados.</p>";document.getElementById("regionLegend").innerHTML="";return;}
+ const W=Math.max(850,Math.min(1250,ms.length*25+140)),H=300,L=58,R=W-22,T=22,B=230,PH=B-T,PW=R-L;
+ let max=0;Object.keys(map).forEach(k=>{max=Math.max(max,map[k]);});const maxY=Math.max(5,Math.ceil(max/10)*10);
+ let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Reservas mensais por região">';
+ for(let i=0;i<=4;i++){const v=maxY*i/4,y=B-PH*i/4;s+='<line class="gridline" x1="'+L+'" y1="'+y+'" x2="'+R+'" y2="'+y+'"/><text class="axis-text" x="'+(L-9)+'" y="'+(y+4)+'" text-anchor="end">'+Math.round(v)+'</text>';}
+ s+='<text class="axis-title" x="'+L+'" y="12">Reservas</text>';
+ const xx=i=>L+(ms.length===1?PW/2:(i/(ms.length-1))*PW);
+ rs.forEach(region=>{
+  const color=regionColors[region]||"#7b8790";let path="",pts=[];
+  ms.forEach((m,i)=>{const v=map[m+"|"+region]||0;const x=xx(i),y=B-(v/maxY)*PH;path+=(i?"L":"M")+x+" "+y+" ";pts.push({x,y,m,v});});
+  s+='<path d="'+path+'" fill="none" stroke="'+color+'" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>';
+  pts.forEach(p=>{s+='<circle cx="'+p.x+'" cy="'+p.y+'" r="3.5" fill="'+color+'"><title>'+region+' · '+monthLabel(p.m)+': '+fmtInt.format(p.v)+' reservas</title></circle>';});
+ });
+ const step=Math.max(1,Math.ceil(ms.length/10));
+ ms.forEach((m,i)=>{if(i%step===0||i===ms.length-1)s+='<text class="axis-text" x="'+xx(i)+'" y="'+(B+20)+'" text-anchor="middle">'+m.slice(5,7)+"/"+m.slice(2,4)+'</text>';});
+ s+='</svg>';document.getElementById("monthlyChart").innerHTML=s;
+ document.getElementById("regionLegend").innerHTML=rs.map(r=>'<span class="legend-item"><i class="legend-line" style="background:'+(regionColors[r]||"#7b8790")+'"></i>'+esc(r)+'</span>').join("");
+}
+function renderComparison(){
+ const rows=rowsWithoutYear(),counts={};rows.forEach(r=>{counts[r[0]]=(counts[r[0]]||0)+r[3];});
+ const allMonths=Object.keys(counts).sort();if(!allMonths.length){document.getElementById("comparisonBody").innerHTML='<tr><td colspan="5">Sem registros para os filtros selecionados.</td></tr>';return;}
+ const y=yearFilter.value;let months=y==="Todos"?allMonths.slice(-12):allMonths.filter(m=>m.slice(0,4)===y);
+ if(!months.length){document.getElementById("comparisonBody").innerHTML='<tr><td colspan="5">Sem meses com registros neste ano.</td></tr>';return;}
+ document.getElementById("tableSubtitle").textContent=y==="Todos"?"Últimos 12 meses disponíveis no recorte":"Meses com registros em "+y;
+ document.getElementById("comparisonBody").innerHTML=months.map(m=>{
+  const cur=counts[m]||0,prev=prevMonth(m),prevCount=allMonths[0]<=prev&&prev<=allMonths[allMonths.length-1]?(counts[prev]||0):null;
+  const py=String(Number(m.slice(0,4))-1)+"-"+m.slice(5,7),pyCount=allMonths[0]<=py&&py<=allMonths[allMonths.length-1]?(counts[py]||0):null;
+  const variance=prevCount===null||prevCount===0?null:(cur-prevCount)/prevCount*100;
+  const cls=variance===null?"":variance>0?"positive":variance<0?"negative":"";
+  return '<tr><td>'+esc(monthLabel(m))+'</td><td>'+fmtInt.format(cur)+'</td><td>'+(prevCount===null?"—":fmtInt.format(prevCount))+'</td><td class="'+cls+'">'+(variance===null?"—":(variance>0?"+":"")+fmtDec.format(variance)+"%")+'</td><td>'+(pyCount===null?"—":fmtInt.format(pyCount))+'</td></tr>';
+ }).join("");
+}
+function updateDashboard(){
+ updateUnitOptions();
+ const rows=filteredRows();
+ renderKPIs(rows);renderUnitChart(rows);renderMonthlyChart(rows);renderComparison();
+}
+regionFilter.addEventListener("change",function(){unitFilter.value="Todas";updateDashboard();});
+yearFilter.addEventListener("change",updateDashboard);
+unitFilter.addEventListener("change",updateDashboard);
+document.getElementById("resetFilters").addEventListener("click",function(){regionFilter.value="Todas";yearFilter.value="Todos";unitFilter.value="Todas";updateDashboard();});
+const regions=[...new Set(DATA.units.map(u=>canonicalRegion(u.region)))].sort();
+regions.forEach(r=>{const o=document.createElement("option");o.value=r;o.textContent=r;regionFilter.appendChild(o);});
+const years=[...new Set(DATA.data.map(r=>r[0].slice(0,4)))].sort();
+years.forEach(y=>{const o=document.createElement("option");o.value=y;o.textContent=y;yearFilter.appendChild(o);});
+const first=DATA.meta.period.split(" a ")[0],last=DATA.meta.period.split(" a ")[1];
+document.getElementById("coverage").textContent=DATA.units.length+" unidades · "+regions.length+" regiões · "+first+" a "+last;
+document.getElementById("year").textContent=new Date().getFullYear();
+updateDashboard();
+})();
+</script>
+</body>
+</html>
